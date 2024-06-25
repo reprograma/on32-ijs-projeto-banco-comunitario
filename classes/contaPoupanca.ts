@@ -1,5 +1,6 @@
 import { ContaTipoEnum } from "../Enums/contaTipo.enum";
 import { ContaInterface } from "../interfaces/conta.interface";
+import { Cliente } from "./cliente";
 
 function geraNumeroConta(): number {
     const min = 100000000;
@@ -13,11 +14,14 @@ export class ContaPoupanca implements ContaInterface {
     public tipo: ContaTipoEnum;
     private _numeroConta: number;
     private _saldo: number;
+    private _cliente: Cliente | undefined;
 
-    constructor(saldo: number) {
+    constructor(cliente: Cliente, saldo: number) {
+
         this.tipo = ContaTipoEnum.POUPANCA,
         this._numeroConta = geraNumeroConta(),
-        this._saldo = saldo 
+        this._saldo = saldo,
+        this._cliente = cliente
     }
     
     public get numeroConta() : number {
@@ -34,20 +38,19 @@ export class ContaPoupanca implements ContaInterface {
     } 
     sacar(valor: number){
         if (valor > this._saldo) {
-            return console.log(`Saldo insuficiente! Seu saldo é de ${this._saldo} \n`);
+            return console.log(`Sque não realizado! Saldo insuficiente! Seu saldo é de ${this._saldo} \n`);
             
         } else {
             this._saldo -= valor;
-            console.log(`Saque realizado. Saldo atual: ${this._saldo} \n`);
+            console.log(`Saque de ${valor} realizado com sucesso.\nSaldo atual: ${this._saldo} \n\n`);
         }
     }
     transferir(valor: number, contaDestino: ContaInterface){
         if (valor > this._saldo) {
-            return console.log(`Saldo insuficiente! Seu saldo é de ${this._saldo} \n`);
-            
+            console.log(`Transferência não realizada! Saldo insuficiente!\nSeu saldo é de ${this._saldo} \n`);   
         } else {
             this._saldo -= valor;
-            contaDestino.saldo = contaDestino.saldo + valor;
+            //contaDestino.saldo = contaDestino.saldo + valor;
             console.log(`Transferência realizada. Saldo atual: ${this._saldo} \n`);
             contaDestino.depositar(valor);
             console.log(`Transferência de ${valor} realizada para a conta ${contaDestino.numeroConta}. \n`);
