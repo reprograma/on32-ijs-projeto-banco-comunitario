@@ -42,10 +42,12 @@ const rl = readline.createInterface({
   output: process.stdout
 });
 
-let escolhaTipoConta:  "corrente" | "poupança";
 
- export function novaConta(cliente: Cliente){
+let escolhaTipoConta: "corrente" | "poupança";
+
+export function novaConta(cliente: Cliente){
   rl.question('Qual o tipo da conta?\n1 - Conta Corrente\n2 - Conta poupança\n', (respostaTipoConta) => {
+
     if(respostaTipoConta === '1'){
       escolhaTipoConta = "corrente";
     }
@@ -60,12 +62,25 @@ let escolhaTipoConta:  "corrente" | "poupança";
 
     const agencia = "0001"; // Agência padrão
     const numeroConta = criypto.randomUUID().slice(0, 8); // Número da conta com 8 caracteres gerados aleatoriamente
-    const saldo = 0;
+    let saldo = 0;
     const tipoConta = escolhaTipoConta;
-    const novaConta = new Conta(cliente, agencia, numeroConta, saldo, tipoConta);
-    console.log(`Conta criada com sucesso! Agência: ${agencia}, Conta: ${numeroConta}`);
-    cliente.adicionarConta(novaConta);
-}
+
+    if (tipoConta === "corrente") {
+      if (cliente.rendaSalarial >= 500) {
+        const novaConta = new Conta(cliente, agencia, numeroConta, saldo, tipoConta);
+        cliente.adicionarConta(novaConta);
+        console.log(`Conta corrente criada com sucesso! Agência: ${agencia}, Conta: ${numeroConta}`);
+      } else {
+        console.log('A renda salarial deve ser de pelo menos R$ 500,00 para abrir uma conta corrente.');
+      }
+    } else {
+      const novaConta = new Conta(cliente, agencia, numeroConta, saldo, tipoConta);
+      cliente.adicionarConta(novaConta);
+      console.log(`Conta poupança criada com sucesso! Agência: ${agencia}, Conta: ${numeroConta}`);
+    }
+
+    rl.close();
+  };
 
 export function menuContas(cliente: Cliente){
   console.log('Escolha uma opção:');
