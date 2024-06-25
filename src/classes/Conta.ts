@@ -1,4 +1,5 @@
 import { NovaConta } from "../interfaces/NovaConta";
+import { Cliente } from "./cliente";
 
 //Classe abstrata que representa uma conta bancária genérica
 export abstract class Conta implements NovaConta {
@@ -33,8 +34,20 @@ sacar(valor: number): void { // subtraindo um valor do saldo se houver fundos su
         }
     }
 
+transferir(valor: number, contaDestino: NovaConta): void { // função transferir que recebe dois parâmetros, valor e contaDestino. Não retorna nada devido :void
+    if (this.saldo >= valor) {
+        this.saldo -= valor;
+        //Chama o método depositar da conta de destino (contaDestino), passando o valor a ser
+        // transferido como argumento.
+        contaDestino.depositar(valor);
+        console.log(`Transferido: R$${valor} para conta ${contaDestino.consultarSaldo()}. Saldo atual: R$${this.saldo}`);
+        } else {
+            console.log('Saldo insuficiente.');
+        }
+    }
 
-
-
+    consultarSaldo(): number { // Declara a função/método consultarSaldo que não recebe parâmetros. Retorna um número (number), que é o saldo atual da conta.
+        return this.saldo; // Retorna o valor do saldo atual (this.saldo). Não tem void
+    }
 
 }
