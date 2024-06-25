@@ -1,7 +1,9 @@
 export class Cliente {
-    Nome completo
-Número de identificação (ID)
-Endereço
-Número de telefone
-Renda salarial 
+    constructor( // criando um novo constructor com as informações pedidas em modo público
+        public nome: string,
+        public id: number,
+        public endereco: string,
+        public telefone: string,
+        public rendaSalarial: number
+    ) {}
 }
