@@ -1,6 +1,8 @@
 import { ContaCorrente } from "./conta";
 import { IConta } from "./interfaces/conta-bancaria.interface";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4, validate } from 'uuid';
+import { validaNomeCompleto } from "./utils";
+
 
 export class Cliente implements Cliente {
     nomeCompleto: string;
@@ -9,13 +11,20 @@ export class Cliente implements Cliente {
     telefone: string;
     rendaSalarial: number;
     contas: IConta[] = [];
-    
+
     constructor(nomeCompleto: string, endereco: string, telefone: string, rendaSalarial: number){
         this.nomeCompleto = nomeCompleto;
         this.id = uuidv4();
         this.endereco = endereco;
         this.telefone = telefone;
         this.rendaSalarial = rendaSalarial;
+    
+        validaNomeCompleto(nomeCompleto)
+
+    if(rendaSalarial = 0) {
+        throw new Error('A renda salarial deve ser maior do que zero (0)');
+    }
+
     }
 
     getInformacoes(){
@@ -50,7 +59,7 @@ export class Cliente implements Cliente {
         if (conta) {
             return conta.depositar(valor);
         } else {
-            return "Cliente não possui conta corrente.";
+            return "Cliente não possui uma conta corrente. Por favor, verifique seu depósito";
         }
     }
 
@@ -59,7 +68,7 @@ export class Cliente implements Cliente {
         if (contaCorrente) {
             return contaCorrente.transferir(valor, contaDestino);
         } else {
-            return "Cliente não possui conta corrente.";
+            return "Cliente não possui uma conta corrente. Por favor, verifique sua transferência.";
         }
     }
 }
