@@ -10,8 +10,11 @@ export class ContaCorrente implements Conta {
  client: interfaceClient;
 
  constructor(numeroConta: string, client: interfaceClient) {
-  this.numeroConta = numeroConta;
-  this.client = client;
+     if (client.salaryIncome < 500) {
+         throw new Error('O cliente precisa ter uma renda mínima de R$ 500,00 para abrir uma conta corrente.');
+     }
+     this.numeroConta = numeroConta;
+     this.client = client;
  }
 
  depositar(valor: number): string {
