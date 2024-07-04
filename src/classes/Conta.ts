@@ -32,7 +32,7 @@ export abstract class Conta implements NovaConta {
         if (this.saldo >= valor) {
             this.saldo -= valor;
             contaDestino.depositar(valor);
-            console.log(`Transferido: R$${valor} para conta ${contaDestino.consultarSaldo()}. Saldo atual: R$${this.saldo}`);
+            console.log(`Transferido: R$${valor} para conta ${contaDestino.numero}. Saldo atual: R$${this.saldo}`);
         } else {
             console.log('Saldo insuficiente.');
         }

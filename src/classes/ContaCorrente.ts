@@ -11,7 +11,6 @@ export class ContaCorrente extends Conta {
 
     sacar(valor: number): void {
         if (this.saldo + this.limiteChequeEspecial >= valor) {
-
             this.saldo -= valor;
             console.log(`Sacado: R$${valor}. Saldo atual: R$${this.saldo}`);
         } else {

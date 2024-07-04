@@ -1,4 +1,5 @@
 export interface NovaConta {
+    numero: any;
     consultarSaldo(): number;
     numeroConta(valor: number): void;
     depositar(valor: number): void;
